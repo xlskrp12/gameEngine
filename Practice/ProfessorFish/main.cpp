@@ -40,7 +40,7 @@ public:
     mProfessorNode = mRoot->getSceneManager("main")->getSceneNode("Professor");
 	mFishRotatingCenterNode = mRoot->getSceneManager("main")->getSceneNode("FishRotatingCenterEntity");
 	mFishNode = mRoot->getSceneManager("main")->getSceneNode("Fish");
-	mFishNode->yaw(Degree(90.0f));
+	//mFishNode->yaw(Degree(90.0f));
   }
 
   bool frameStarted(const FrameEvent &evt)
@@ -48,24 +48,24 @@ public:
     // Fill Here ----------------------------------------------
 
 	  static float professorVelocity = 100.0f;
-	  static float professorRotationVelocity = 100.0f;
+	  static float professorRotationSpeed = 100.0f;
 
 	  static float professorRotationAmount = 0.0f;
-	  static float fishVelocity = 100.0f;
+	  static float fishSpeed = 100.0f;
 
 	  static int professorState = RUNNING;
 
 	  if (RUNNING == professorState)
 	  {
-		  mProfessorNode->translate(0, 0, professorVelocity *evt.timeSinceLastFrame);
+		  mProfessorNode->translate(0.0f, 0.0f, professorVelocity *evt.timeSinceLastFrame);
 		  if (mProfessorNode->getPosition().z > 250.0f)
 		  {
-			  mProfessorNode->setPosition(0, 0, 250.0f);
+			  mProfessorNode->setPosition(0.0f, 0.0f, 250.0f);
 			  professorState = ROTATING;
 		  }
 		  else if (mProfessorNode->getPosition().z < -250.0f)
 		  {
-			  mProfessorNode->setPosition(0, 0, -250.0f);
+			  mProfessorNode->setPosition(0.0f, 0.0f, -250.0f);
 			  professorState = ROTATING;
 		  }
 
@@ -74,8 +74,8 @@ public:
 	  {
 		  if (mProfessorNode->getPosition().z >= 250.0f)
 		  {
-			  mProfessorNode->yaw(Degree(professorRotationVelocity*evt.timeSinceLastFrame));
-			  professorRotationAmount += professorRotationVelocity*evt.timeSinceLastFrame;
+			  mProfessorNode->yaw(Degree(professorRotationSpeed*evt.timeSinceLastFrame));
+			  professorRotationAmount += professorRotationSpeed*evt.timeSinceLastFrame;
 			  if (professorRotationAmount > 180.0f)
 			  {
 				  professorRotationAmount = 180.0f;
@@ -85,8 +85,8 @@ public:
 		  }
 		  else if (mProfessorNode->getPosition().z <=-250.0f)
 		  {
-			  mProfessorNode->yaw(Degree(professorRotationVelocity*evt.timeSinceLastFrame));
-			  professorRotationAmount += professorRotationVelocity*evt.timeSinceLastFrame;
+			  mProfessorNode->yaw(Degree(professorRotationSpeed*evt.timeSinceLastFrame));
+			  professorRotationAmount += professorRotationSpeed*evt.timeSinceLastFrame;
 			  if (professorRotationAmount > 360.0f)
 			  {
 				  professorRotationAmount = 0.0f;
@@ -95,7 +95,7 @@ public:
 			  }
 		  }
 	  }
-	  mFishRotatingCenterNode->yaw(Degree(-fishVelocity * evt.timeSinceLastFrame));
+	  mFishRotatingCenterNode->yaw(Degree(-fishSpeed * evt.timeSinceLastFrame));
     //-----------------------------------------------------------
 
     return true;
@@ -190,7 +190,7 @@ public:
 	mFishRotatingCenterNode->setInheritOrientation(false);
 
 	Entity* mFishEntity = mSceneMgr->createEntity("Fish", "Fish.mesh");
-	SceneNode* mFishNode = mFishRotatingCenterNode->createChildSceneNode("Fish", Vector3(100.0f, 0.0f, 0.0f));
+	SceneNode* mFishNode = mFishRotatingCenterNode->createChildSceneNode("Fish", Vector3(0.0f, 0.0f, 100.0f));
 	mFishNode->setScale(Vector3(10.0f, 10.0f, 10.0f));
 	mFishNode->attachObject(mFishEntity);
 
